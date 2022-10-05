@@ -1,0 +1,276 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>基于PyTorch复现CNN模型训练Fashion-MNIST数据集 | SunShine</title><meta name="keywords" content="python,PyTorch,CNN"><meta name="author" content="Young"><meta name="copyright" content="Young"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="基于PyTorch在Fashion-MNIST数据集上复现经典卷积神经网络模型，包括LeNet, AlexNet, VGGNet, InceptionNet 和 ResNet。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于PyTorch复现CNN模型训练Fashion-MNIST数据集">
+<meta property="og:url" content="http://wzyjsha-00.github.io/2022/06/23/ji-yu-pytorch-fu-xian-cnn-mo-xing-xun-lian-fashion-mnist-shu-ju-ji/index.html">
+<meta property="og:site_name" content="SunShine">
+<meta property="og:description" content="基于PyTorch在Fashion-MNIST数据集上复现经典卷积神经网络模型，包括LeNet, AlexNet, VGGNet, InceptionNet 和 ResNet。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://wzyjsha-00.github.io/pics/cover/Fashion-MNIST_cover.png">
+<meta property="article:published_time" content="2022-06-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-06-22T16:00:00.000Z">
+<meta property="article:author" content="Young">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="PyTorch">
+<meta property="article:tag" content="CNN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://wzyjsha-00.github.io/pics/cover/Fashion-MNIST_cover.png"><link rel="shortcut icon" href="/pics/favicon.png"><link rel="canonical" href="http://wzyjsha-00.github.io/2022/06/23/ji-yu-pytorch-fu-xian-cnn-mo-xing-xun-lian-fashion-mnist-shu-ju-ji/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: ture,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '基于PyTorch复现CNN模型训练Fashion-MNIST数据集',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-06-23 00:00:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/pics/IMG_20220829_211540.jpg" onerror="onerror=null;src='/pics/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> Gallery</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/pics/Fashion-MNIST_top.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">SunShine</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> Gallery</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">基于PyTorch复现CNN模型训练Fashion-MNIST数据集</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-06-22T16:00:00.000Z" title="发表于 2022-06-23 00:00:00">2022-06-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-06-22T16:00:00.000Z" title="更新于 2022-06-23 00:00:00">2022-06-23</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="基于PyTorch复现CNN模型训练Fashion-MNIST数据集"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>本文是基于PyTorch在 <a target="_blank" rel="noopener" href="https://github.com/zalandoresearch/fashion-mnist">Fashion-MNIST</a> 数据集上对LeNet, AlexNet, VGGNet, InceptionNet, ResNet等经典<strong>卷积神经网络</strong> （<strong>C</strong>onvolutional <strong>N</strong>eural <strong>N</strong>etworks） 模型进行复现，各模型复现代码及论文地址如下：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/wzyjsha-00/CNN-for-Fashion-MNIST/blob/master/model/LeNet.py"><strong>LeNet</strong></a>, <a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/document/726791"><em>Paper Link</em></a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/wzyjsha-00/CNN-for-Fashion-MNIST/blob/master/model/AlexNet.py"><strong>AlexNet</strong></a>, <a target="_blank" rel="noopener" href="http://www.cs.toronto.edu/~fritz/absps/imagenet.pdf"><em>Paper Link</em></a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/wzyjsha-00/CNN-for-Fashion-MNIST/blob/master/model/VGGNet.py"><strong>VGGNet</strong></a>, <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1409.1556"><em>Paper Link</em></a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/wzyjsha-00/CNN-for-Fashion-MNIST/blob/master/model/InceptionNet.py"><strong>InceptionNet</strong></a>, <a target="_blank" rel="noopener" href="https://www.cv-foundation.org/openaccess/content_cvpr_2015/html/Szegedy_Going_Deeper_With_2015_CVPR_paper.html"><em>Paper Link</em></a></li>
+<li><a href="%5Bmodel/ResNet.py%5D(https://github.com/wzyjsha-00/CNN-for-Fashion-MNIST/blob/master/model/ResNet.py)"><strong>ResNet</strong></a>, <a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content_cvpr_2016/html/He_Deep_Residual_Learning_CVPR_2016_paper.html"><em>Paper Link</em></a></li>
+</ul>
+<h1 id="运行环境与配置"><a href="#运行环境与配置" class="headerlink" title="运行环境与配置"></a>运行环境与配置</h1><pre class="line-numbers language-python" data-language="python"><code class="language-python">python <span class="token number">3.9</span><span class="token number">.11</span>
+cuda <span class="token number">11.0</span><span class="token number">.3</span>
+cudnn <span class="token number">8.0</span><span class="token number">.5</span> 
+torch <span class="token number">1.7</span><span class="token number">.1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li><strong>安装 PyTorch：</strong>  <code>pip install torch==1.7.1+cu110 torchvision==0.8.2+cu110 torchaudio==0.7.2 -f https://download.pytorch.org/whl/torch_stable.html</code></li>
+<li><strong>安装 python 依赖包：</strong> <code>pip install -r requirements.txt</code></li>
+<li><strong>下载</strong> <a target="_blank" rel="noopener" href="https://1drv.ms/u/s!AjRAq1taDd8ygo19T6XNf6S5T9HT5Q">Fashion-MNIST</a> 数据集，在一级目录下新建 <em>data</em> 文件夹并将解压后的文件放置在 <em>data</em> 文件夹下</li>
+<li>从相应的预训练模型参数文件夹中 <strong>下载</strong> <strong>best.pth.tar</strong> 权重文件 (详见 <strong>运行效果记录</strong> 表格) 并将 <strong>best.pth.tar</strong> 权重文件放置在 <a target="_blank" rel="noopener" href="https://github.com/wzyjsha-00/CNN-for-Fashion-MNIST/blob/master/model/">model</a> 文件夹下</li>
+<li>在 <a href="train.py">train.py </a> 文件中的第125至第129行中 <strong>选择</strong> 你所需要的模型并 <strong>检查</strong> <a target="_blank" rel="noopener" href="https://github.com/wzyjsha-00/CNN-for-Fashion-MNIST/blob/master/config/hyper_param.py">超参数</a></li>
+</ul>
+<h1 id="运行效果记录"><a href="#运行效果记录" class="headerlink" title="运行效果记录"></a>运行效果记录</h1><table>
+<thead>
+<tr>
+<th align="center">Date</th>
+<th align="center">Network</th>
+<th align="center">Train Epochs &#x2F; Time</th>
+<th align="center">Best Test Acc</th>
+<th align="center">Model Param</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">09 June, 2022</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/wzyjsha-00/CNN-for-Fashion-MNIST/blob/master/model/LeNet.py">LeNet</a></td>
+<td align="center">30 &#x2F; 18m-29s</td>
+<td align="center">0.9016</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://1drv.ms/u/s!AjRAq1taDd8ygoxyiPfXntiHJUpnyg?e=RmTujU">LeNet-best.pth.tar</a></td>
+</tr>
+<tr>
+<td align="center">11 June, 2022</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/wzyjsha-00/CNN-for-Fashion-MNIST/blob/master/model/AlexNet.py">AlexNet<sup>1</a></td>
+<td align="center">30 &#x2F; 35m-39s</td>
+<td align="center">0.9219</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://1drv.ms/u/s!AjRAq1taDd8ygox8xU7DnBkF8dsvjA?e=slHcKS">AlexNet-best.pth.tar</a></td>
+</tr>
+<tr>
+<td align="center">13 June, 2022</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/wzyjsha-00/CNN-for-Fashion-MNIST/blob/master/model/VGGNet.py">VGGNet<sup>2</a></td>
+<td align="center">30 &#x2F; 30m-35s</td>
+<td align="center">0.9135</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://1drv.ms/u/s!AjRAq1taDd8ygo0AGbjJNEZyfuNnMQ?e=O7AOi9">VGGNet-best.pth.tar</a></td>
+</tr>
+<tr>
+<td align="center">22 June, 2022</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/wzyjsha-00/CNN-for-Fashion-MNIST/blob/master/model/InceptionNet.py">InceptionNet</a></td>
+<td align="center">30 &#x2F; 416m-54s</td>
+<td align="center">0.9274</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://1drv.ms/u/s!AjRAq1taDd8ygo120M9sOh9bJtrwQg?e=kewwJ7">InceptionNet-best.pth.tar</a></td>
+</tr>
+<tr>
+<td align="center">16 June, 2022</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/wzyjsha-00/CNN-for-Fashion-MNIST/blob/master/model/ResNet.py">ResNet</a></td>
+<td align="center">30 &#x2F; 82m-24s</td>
+<td align="center">0.9340</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://1drv.ms/u/s!AjRAq1taDd8ygox-sWyCXUrfu-bCOg?e=gchZpE">ResNet-best.pth.tar</a></td>
+</tr>
+</tbody></table>
+<h2 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h2><ul>
+<li>设备 <strong>GPU:</strong> NVIDIA GeForce GTX 1070, <strong>CPU:</strong> Intel i7-7700K, <strong>RAM:</strong> 32GB and Win10 系统。</li>
+<li>训练的 loss 曲线详见 <a target="_blank" rel="noopener" href="https://github.com/wzyjsha-00/CNN-for-Fashion-MNIST/tree/master/model/Loss_Curves/"><strong>Loss Curves</strong></a> 文件夹。</li>
+<li><sup>1</sup> 考虑到Fashion-MNIST中图片的大小，这儿所复现的AlexNet网络与最初论文中所设计的AlexNet网络有细微差别，并且在复现中也没有采用seperate group 和 LRN 结构。</li>
+<li><sup>2</sup> 考虑到Fashion-MNIST中图片的大小，在所复现的VGGNet16网络中删除了最后8-13层的两个卷积块。</li>
+</ul>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><blockquote>
+<ol>
+<li>LeCun, Y., Bottou, L., Bengio, Y., &amp; Haffner, P. (1998). Gradient-based learning applied to document recognition. Proceedings of the IEEE, 86(11), 2278-2324.</li>
+<li>Krizhevsky, A., Sutskever, I., &amp; Hinton, G. E. (2012). Imagenet classification with deep convolutional neural networks. Advances in neural information processing systems, 25.</li>
+<li>Simonyan, K., &amp; Zisserman, A. (2014). Very deep convolutional networks for large-scale image recognition. arXiv preprint arXiv:1409.1556.</li>
+<li>Szegedy, C., Liu, W., Jia, Y., Sermanet, P., Reed, S., Anguelov, D., … &amp; Rabinovich, A. (2015). Going deeper with convolutions. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 1-9).</li>
+<li>He, K., Zhang, X., Ren, S., &amp; Sun, J. (2016). Deep residual learning for image recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 770-778).</li>
+</ol>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/wzyjsha-00/CNN-for-Fashion-MNIST">Young</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://wzyjsha-00.github.io/2022/06/23/ji-yu-pytorch-fu-xian-cnn-mo-xing-xun-lian-fashion-mnist-shu-ju-ji/">http://wzyjsha-00.github.io/2022/06/23/ji-yu-pytorch-fu-xian-cnn-mo-xing-xun-lian-fashion-mnist-shu-ju-ji/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://wzyjsha-00.github.io" target="_blank">SunShine</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python/">python</a><a class="post-meta__tags" href="/tags/PyTorch/">PyTorch</a><a class="post-meta__tags" href="/tags/CNN/">CNN</a></div><div class="post_share"><div class="social-share" data-image="/pics/cover/Fashion-MNIST_cover.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/06/23/yue-du-gan-wu-zhi-shen-shi-nei/"><img class="prev-cover" src="/pics/reading/%E7%BD%AE%E8%BA%AB%E4%BA%8B%E5%86%85-cover.jpg" onerror="onerror=null;src='/pics/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">阅读感悟：《置身事内》</div></div></a></div><div class="next-post pull-right"><a href="/2021/05/07/yue-du-gan-wu-feng-sheng/"><img class="next-cover" src="/pics/reading/%E9%A3%8E%E5%A3%B0-%E9%BA%A6%E5%AE%B6-cover.jpg" onerror="onerror=null;src='/pics/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">阅读感悟：《风声》</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/09/14/python-tong-ji-xue-xue-xi-bi-ji-02-shu-ju-de-gai-gua-xing-du-liang/" title="Python统计学学习笔记02-数据的概括性度量"><img class="cover" src="/pics/mmexport1651647402417.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-14</div><div class="title">Python统计学学习笔记02-数据的概括性度量</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/pics/IMG_20220829_211540.jpg" onerror="this.onerror=null;this.src='/pics/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Young</div><div class="author-info__description">一以贯之。</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/wzyjsha-00"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/wzyjsha-00" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:wzyjsha@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83%E4%B8%8E%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">运行环境与配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E6%95%88%E6%9E%9C%E8%AE%B0%E5%BD%95"><span class="toc-number">3.</span> <span class="toc-text">运行效果记录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%87%E6%B3%A8"><span class="toc-number">3.1.</span> <span class="toc-text">备注</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">4.</span> <span class="toc-text">参考文献</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 By Young</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

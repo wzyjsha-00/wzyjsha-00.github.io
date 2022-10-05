@@ -1,0 +1,460 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Python统计学学习笔记02-数据的概括性度量 | SunShine</title><meta name="keywords" content="python,统计学,学习笔记"><meta name="author" content="Young"><meta name="copyright" content="Young"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="数据分布特征测度  分布的集中趋势，反应各数据向其中心值靠拢或聚集的程度； 分布的离散程度，反应各数据远离其中心值的趋势； 分布的形状，反应数据分布的偏态和峰态。   集中趋势的度量 分类数据：众数（Mode） 众数是一组数据中出现次数最多的变量值，用 $ M_o $ 表示。众数主要用于测度分类数据的集中趋势，当然也适用于作为顺序数据以及数值型数据集中趋势的测度值。一般情况下，只有在数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python统计学学习笔记02-数据的概括性度量">
+<meta property="og:url" content="http://wzyjsha-00.github.io/2022/09/14/python-tong-ji-xue-xue-xi-bi-ji-02-shu-ju-de-gai-gua-xing-du-liang/index.html">
+<meta property="og:site_name" content="SunShine">
+<meta property="og:description" content="数据分布特征测度  分布的集中趋势，反应各数据向其中心值靠拢或聚集的程度； 分布的离散程度，反应各数据远离其中心值的趋势； 分布的形状，反应数据分布的偏态和峰态。   集中趋势的度量 分类数据：众数（Mode） 众数是一组数据中出现次数最多的变量值，用 $ M_o $ 表示。众数主要用于测度分类数据的集中趋势，当然也适用于作为顺序数据以及数值型数据集中趋势的测度值。一般情况下，只有在数">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://wzyjsha-00.github.io/pics/mmexport1651647402417.jpg">
+<meta property="article:published_time" content="2022-09-13T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-09-16T16:00:00.000Z">
+<meta property="article:author" content="Young">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="统计学">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://wzyjsha-00.github.io/pics/mmexport1651647402417.jpg"><link rel="shortcut icon" href="/pics/favicon.png"><link rel="canonical" href="http://wzyjsha-00.github.io/2022/09/14/python-tong-ji-xue-xue-xi-bi-ji-02-shu-ju-de-gai-gua-xing-du-liang/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: ture,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Python统计学学习笔记02-数据的概括性度量',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-17 00:00:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/pics/IMG_20220829_211540.jpg" onerror="onerror=null;src='/pics/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> Gallery</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/pics/mmexport1651647402417.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">SunShine</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> Gallery</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Python统计学学习笔记02-数据的概括性度量</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-09-13T16:00:00.000Z" title="发表于 2022-09-14 00:00:00">2022-09-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-09-16T16:00:00.000Z" title="更新于 2022-09-17 00:00:00">2022-09-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/">数据科学</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Python统计学学习笔记02-数据的概括性度量"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><!-- > 《》，作者，出版社，版次信息 -->
+
+<!-- <center>
+    <img style="border-radius: 0.5em; height: 300px; alien: center" src="\pics\财税与政府行为.jpg">
+    <div style="border-bottom: 1px solid #d9d9d9; display: inline-block; color: #999; ">这里输入题注</div>
+</center> -->
+
+
+<blockquote>
+<h1 id="数据分布特征测度"><a href="#数据分布特征测度" class="headerlink" title="数据分布特征测度"></a>数据分布特征测度</h1></blockquote>
+<ul>
+<li>分布的<strong>集中趋势</strong>，反应各数据向其中心值靠拢或聚集的程度；</li>
+<li>分布的<strong>离散程度</strong>，反应各数据远离其中心值的趋势；</li>
+<li>分布的<strong>形状</strong>，反应数据分布的偏态和峰态。</li>
+</ul>
+<blockquote>
+<h1 id="集中趋势的度量"><a href="#集中趋势的度量" class="headerlink" title="集中趋势的度量"></a>集中趋势的度量</h1></blockquote>
+<h2 id="分类数据：众数（Mode）"><a href="#分类数据：众数（Mode）" class="headerlink" title="分类数据：众数（Mode）"></a>分类数据：众数（Mode）</h2><ul>
+<li>众数是一组数据中出现次数最多的变量值，用 $ M_o $ 表示。众数主要用于测度分类数据的集中趋势，当然也适用于作为顺序数据以及数值型数据集中趋势的测度值。一般情况下，只有在数据量较大的情况下，众数才有意义。</li>
+<li>众数是一个位置代表值，它不受数据中极端值的影响。从分布的角度看，众数是具有明显集中趋势点的数值，一组数据分布的最高峰点所对应的数值即为众数。</li>
+</ul>
+<h2 id="顺序数据：中位数（median）和分位数"><a href="#顺序数据：中位数（median）和分位数" class="headerlink" title="顺序数据：中位数（median）和分位数"></a>顺序数据：中位数（median）和分位数</h2><h3 id="中位数（median）"><a href="#中位数（median）" class="headerlink" title="中位数（median）"></a>中位数（median）</h3><ul>
+<li>中位数是一组数据排序后处于中间位置上的变量值，用 $ M_e $ 表示。中位数主要用于测度顺序数据的集中趋势，当然也适用于测度数值型数据的集中趋势，但不适用于分类数据。</li>
+<li>中位数是一个位置代表值，其特点是不受数据中极端值的影响。</li>
+</ul>
+<h3 id="四分位数（quartile）"><a href="#四分位数（quartile）" class="headerlink" title="四分位数（quartile）"></a>四分位数（quartile）</h3><ul>
+<li>四分位数也称四分位点，它是一组数据排序后处于25%和75%位置上的值。四分位数是通过3个点将全部数据等分为4部分，其中每部分包含25%的数据，中间的四分位数就是中位数，通常所说的四分位数是指处在25%位置上的数值（下四分位数 $ Q_L $ ）和处在75%位置上的数值（上四分位数 $ Q_U $ ）。</li>
+<li>计算：如果位置是整数，四分位数就是该位置对应的值；如果是在0.5的位置上，则取该位置两侧值得平均数；如果是在0.25或0.75得位置上，则四分位数等于该位置的下侧值加上按比例分摊位置两侧数值的差值。</li>
+</ul>
+<h2 id="数值型数据：平均数"><a href="#数值型数据：平均数" class="headerlink" title="数值型数据：平均数"></a>数值型数据：平均数</h2><ul>
+<li>平均数也称均值（mean），它是一组数据相加后除以数据的个数得到的结果，是集中趋势的最主要测度值，适用于数值型数据而不适用分类数据和顺序数据。</li>
+</ul>
+<h3 id="简单平均数和加权平均数"><a href="#简单平均数和加权平均数" class="headerlink" title="简单平均数和加权平均数"></a>简单平均数和加权平均数</h3><ul>
+<li>根据未经分组数据计算的平均数称为简单平均数（simple mean）。设一组样本数据为 $ x_1 $, $ x_2 $, $ \cdots $, $ x_n $, 样本量为 $ n $,则简单样本平均数的计算公式为：$$ \overline{x} &#x3D; \frac{ x_1 + x_2 + \cdots + x_n}{n} &#x3D; \frac{ \sum\limits_{i&#x3D;1}^nx_i}{n} $$ </li>
+<li>根据分组数据计算的平均数称为加权平均数（weighted mean）。设原始数据被分为k组，各组的组中值分别用$ M_1 $, $ M_2 $, $ \cdots $, $ M_k $ 表示，各组变量出现的频数分别用 $ f_1 $, $ f_2 $, $ \cdots $, $ f_k $ 表示，则样本加权平均数的计算公式为：$$ \overline{x} &#x3D; \frac{ M_1f_1 + M_2f_2 + \cdots + M_kf_k}{f_1 + f_2 + \cdots + f_k} &#x3D; \frac{ \sum\limits_{i&#x3D;1}^kM_if_i}{n} $$ </li>
+<li>从统计思想上看，平均数是一组数据的重心所在，是数据误差相互抵消后的必然结果。</li>
+</ul>
+<h3 id="几何平均数（geometric-mean）"><a href="#几何平均数（geometric-mean）" class="headerlink" title="几何平均数（geometric mean）"></a>几何平均数（geometric mean）</h3><ul>
+<li>几何平均数是 $ n $ 个变量值乘积的 $ n $ 次方根，用 $ G $ 表示，主要用于计算平均比率，计算公式为：$$ G &#x3D; \sqrt[n]{x_1 \times x_2 \times \cdots \times x_n} &#x3D; \sqrt[n]{\prod_{i&#x3D;1}^nx_i} $$</li>
+<li>当所平均的各比率数值差别不大时，算术平均和几何平均的结果相差不大，如果各比率的数值相差较大时，二者的差别就很明显。</li>
+</ul>
+<h2 id="众数、中位数和平均数的比较"><a href="#众数、中位数和平均数的比较" class="headerlink" title="众数、中位数和平均数的比较"></a>众数、中位数和平均数的比较</h2><blockquote>
+<h1 id="离散程度的度量"><a href="#离散程度的度量" class="headerlink" title="离散程度的度量"></a>离散程度的度量</h1></blockquote>
+<h2 id="分类数据：异众比率（variation-ratio）"><a href="#分类数据：异众比率（variation-ratio）" class="headerlink" title="分类数据：异众比率（variation ratio）"></a>分类数据：异众比率（variation ratio）</h2><ul>
+<li>异众比率是指非众数组的频数占总频数的比例，用 $ V_r $ 表示，计算公式为：$$ V_r &#x3D; \frac{\sum(f_i - f_m)}{\sum(f_i)} &#x3D; 1-\frac{f_m}{\sum(f_i)} $$ 式中，$ \sum(f_i) $ 为变量值的总频数；$ f_m $ 为众数组的频数。</li>
+<li>异众比率主要用于衡量众数对一组数据的代表程度。异众比率越大，说明非众数组的频数占总频数的比重越大，众数的代表性就越差。</li>
+<li>异众比率主要适合测度分类数据的离散程度，对于顺序数据和数值型数据也可以计算。</li>
+</ul>
+<h2 id="顺序数据：四分位差（quartile-deviation）"><a href="#顺序数据：四分位差（quartile-deviation）" class="headerlink" title="顺序数据：四分位差（quartile deviation）"></a>顺序数据：四分位差（quartile deviation）</h2><ul>
+<li>四分位差也称为内距或四分间距，它是上四分位数与下四分位数只差，用 $ Q_d $ 表示，计算公式为： $$ Q_d &#x3D; Q_U - Q_L $$</li>
+<li>四分位差反映了中间50%数据的离散程度，其数值越小，说明中间的的数据越集中。四分位差不受极值的影响。四分位差主要用于测度顺序数据的离散程度，对于数值型数据也可以计算四分位差，但不适合分类数据。</li>
+</ul>
+<h2 id="数值型数据：方差和标准差"><a href="#数值型数据：方差和标准差" class="headerlink" title="数值型数据：方差和标准差"></a>数值型数据：方差和标准差</h2><h3 id="极差（range）"><a href="#极差（range）" class="headerlink" title="极差（range）"></a>极差（range）</h3><ul>
+<li>一组数据的最大值与最小值之差称为极差，也称全距，用 $ R $ 表示。</li>
+</ul>
+<h3 id="平均差（mean-deviation）"><a href="#平均差（mean-deviation）" class="headerlink" title="平均差（mean deviation）"></a>平均差（mean deviation）</h3><ul>
+<li>平均差也称平均绝对离差，它是各变量值与其平均数离差绝对值的平均数，用 $ M_d $ 表示。</li>
+<li>平均差以平均数为中心，反映了每个数据与平均数的平均差异程度，它能全面准确地反应一组数据的离散状况。平均差越大，说明数据的离散程度越大。</li>
+</ul>
+<h3 id="方差（variance）和标准差（standard-deviation）"><a href="#方差（variance）和标准差（standard-deviation）" class="headerlink" title="方差（variance）和标准差（standard deviation）"></a>方差（variance）和标准差（standard deviation）</h3><ul>
+<li>方差是各变量值与其平均数离差平方的平均数，方差的平方根称为标准差，它们是实际中应用最广的离散程度测度值。</li>
+<li>设样本方差为 $ s^2 $，未分组数据样本方差的计算公式为：$$ s^2 &#x3D; \frac{\sum\limits_{i&#x3D;1}^n(x_i-\overline{x})^2}{n-1} $$</li>
+<li>样本方差是用样本数据个数减1后去除离差平方和，其中样本数据个数减1即 $ n-1 $ 称为 <strong>自由度</strong>。<ul>
+<li>自由度是指附加给独立的观测值的约束或限制的个数。</li>
+<li>样本方差自由度为 $ n-1 $ 的原因在于，计算离差平方和 $ \sum\limits_{i&#x3D;1}^n(x_i-x)^2 $ 时，必须先求出样本平均数 $ \overline{x} $,而$ \overline{x} $ 则是附加给$ \sum\limits_{i&#x3D;1}^n(x_i-x)^2 $的一个约束。因此，计算离差平方和时只有 $ n-1 $ 个独立的观测值，而不是 $ n $ 个。</li>
+</ul>
+</li>
+</ul>
+<h3 id="相对位置的度量"><a href="#相对位置的度量" class="headerlink" title="相对位置的度量"></a>相对位置的度量</h3><h4 id="标准分数（standard-score）"><a href="#标准分数（standard-score）" class="headerlink" title="标准分数（standard score）"></a>标准分数（standard score）</h4><ul>
+<li>变量值与其平均数的离差除以标准差后的值称为标准分数，也称标准化值或 $ z $ 分数，其计算公式（统计标准化公式）为：$$ z_i &#x3D; \frac{x_i-\overline{x}}{s} $$</li>
+<li>标准分数给出了一组数据中各数值的相对位置，在对多个具有不同量纲的变量进行处理时，常常需要对各变量进行标准化处理。</li>
+<li>标准分数具有平均数为0、标准差为1的特性。</li>
+</ul>
+<h4 id="切比雪夫不等式"><a href="#切比雪夫不等式" class="headerlink" title="切比雪夫不等式"></a>切比雪夫不等式</h4><ul>
+<li>对于任意分布形态的数据，根据切比雪夫不等式，至少有 $ 1-\frac{1}{k^2} $ 的数据落在 $ k $ 个标准差之内，其中 $ k $ 是大于1的任意值，但不一定是整数。</li>
+</ul>
+<h2 id="相对离散程度：离散系数"><a href="#相对离散程度：离散系数" class="headerlink" title="相对离散程度：离散系数"></a>相对离散程度：离散系数</h2><ul>
+<li>对于平均水平不同或计量单位不同的不同组别的变量值，是不能用标准差直接比较其离散程度的。</li>
+<li>为消除变量值水平高低和计量单位不同对离散程度测度值的影响，需要计算离散系数（变异系数，coefficient of variation）,它是一组数据的标准差与其相应的平均数之比，计算公式为： $$ v_s &#x3D; \frac{s}{\overline{x}} $$</li>
+<li>离散系数是测度数据离散程度的相对统计量，主要用于比较不同样本数据的离散程度。离散系数大，说明数据的离散程度也大；离散系数小，说明数据的离散程度也小。（当平均数接近零时，离散系数的值趋于增大，此时必须慎重解释）。</li>
+</ul>
+<blockquote>
+<h1 id="偏态与峰态度量"><a href="#偏态与峰态度量" class="headerlink" title="偏态与峰态度量"></a>偏态与峰态度量</h1></blockquote>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">测度内容</th>
+<th align="center">统计量</th>
+<th align="center">符号与计算公式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">偏态（skewness）</td>
+<td align="center">对称性</td>
+<td align="center">偏态系数</td>
+<td align="center">$ SK &#x3D; \frac{n\sum(x-\overline{x})^3}{(n-1)(n-2)s^3} $</td>
+</tr>
+<tr>
+<td align="center">峰态（kurtosis）</td>
+<td align="center">平峰或尖峰程度</td>
+<td align="center">峰态系数</td>
+<td align="center">$ K &#x3D; \frac{n(n+1)\sum(x-\overline{x})^4-3[\sum(x-\overline{x})^2]^2(n-1)}{(n-1)(n-2)(n-3)s^4} $</td>
+</tr>
+</tbody></table>
+<ul>
+<li>如果一组数据的分布时对称的，则偏态系数等于0；反之非对称分布。<ul>
+<li>当 $ SK&gt;0 $， 正篇或右偏，此时众数&lt;中位数&lt;平均数；</li>
+<li>当 $ SK&lt;0 $， 负偏或左偏，此时众数&gt;中位数&gt;平均数。</li>
+</ul>
+</li>
+<li>峰态分布是与标准正态分布相比较的，如果一组数据服从标准正态分布，则 $K&#x3D;0$；若峰态系数的值明显不等于0.则表明分布比正态分布更平或更尖，通常称为平峰分布或尖峰分布。<ul>
+<li>当 $K&gt;0$ 时为尖峰分布，数据的分布更集中；</li>
+<li>当 $K&lt;0$ 时为扁平分布，数据的分布更分散。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<h1 id="附表1-描述统计量应用范围一览表"><a href="#附表1-描述统计量应用范围一览表" class="headerlink" title="附表1 描述统计量应用范围一览表"></a>附表1 描述统计量应用范围一览表</h1></blockquote>
+<div style="text-align: center;">
+  <table>
+    <tr>
+        <th>统计维度</th>
+        <th>统计量</th>
+        <th>分类数据</th>  
+        <th>顺序数据</th>  
+        <th>数值型数据</th>  
+    </tr >
+    <tr >
+        <td rowspan="3">集中趋势</td>
+        <td>众数</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>中位数</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>平均数</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td rowspan="6">离散程度</td>
+        <td>异众比率</td>
+        <td>★</td>
+        <td>√</td>
+        <td>√</td>
+    </tr>
+    <tr>
+        <td>四分位差</td>
+        <td>×</td>
+        <td>★</td>
+        <td>√</td>
+    </tr>
+    <tr>
+        <td>极差</td>
+        <td></td>
+        <td></td>
+        <td>√</td>
+    </tr>
+    <tr>
+        <td>平均差</td>
+        <td></td>
+        <td></td>
+        <td>√</td>
+    </tr>
+    <tr>
+        <td>方差或标准差</td>
+        <td></td>
+        <td></td>
+        <td>★</td>
+    </tr>
+    <tr>
+        <td>离散系数</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+  </table>
+</div>  
+* ★表示主要适用，√表示也可以计算，×表示不适用。
+
+<blockquote>
+<h1 id="附表2-描述统计量对应函数表"><a href="#附表2-描述统计量对应函数表" class="headerlink" title="附表2 描述统计量对应函数表"></a>附表2 描述统计量对应函数表</h1></blockquote>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>集中趋势</strong>统计量</th>
+<th align="center">众数</th>
+<th align="center">中位数</th>
+<th align="center">平均数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>Python函数</strong></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"><strong>Excel函数</strong></td>
+<td align="center">MODE</td>
+<td align="center">MEDIAN</td>
+<td align="center">AVERAGE</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>离散程度</strong>统计量</th>
+<th align="center">异众比率</th>
+<th align="center">四分位差</th>
+<th align="center">极差</th>
+<th align="center">平均差</th>
+<th align="center">方差</th>
+<th align="center">离散系数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>Python函数</strong></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"><strong>Excel函数</strong></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">AVEDEV</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>分布形状</strong>统计量</th>
+<th align="center">偏态系数</th>
+<th align="center">峰态系数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>Python函数</strong></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"><strong>Excel函数</strong></td>
+<td align="center">SKEW</td>
+<td align="center">KURT</td>
+</tr>
+</tbody></table>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://wzyjsha-00.github.io">Young</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://wzyjsha-00.github.io/2022/09/14/python-tong-ji-xue-xue-xi-bi-ji-02-shu-ju-de-gai-gua-xing-du-liang/">http://wzyjsha-00.github.io/2022/09/14/python-tong-ji-xue-xue-xi-bi-ji-02-shu-ju-de-gai-gua-xing-du-liang/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://wzyjsha-00.github.io" target="_blank">SunShine</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python/">python</a><a class="post-meta__tags" href="/tags/%E7%BB%9F%E8%AE%A1%E5%AD%A6/">统计学</a><a class="post-meta__tags" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></div><div class="post_share"><div class="social-share" data-image="/pics/mmexport1651647402417.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/08/30/sublimetext3-shi-xian-markdown-shi-shi-yu-lan/"><img class="next-cover" src="/pics/SublimeText_logo.jpeg" onerror="onerror=null;src='/pics/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Sublime Text3实现Markdown实时预览</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/06/23/ji-yu-pytorch-fu-xian-cnn-mo-xing-xun-lian-fashion-mnist-shu-ju-ji/" title="基于PyTorch复现CNN模型训练Fashion-MNIST数据集"><img class="cover" src="/pics/cover/Fashion-MNIST_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-06-23</div><div class="title">基于PyTorch复现CNN模型训练Fashion-MNIST数据集</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/pics/IMG_20220829_211540.jpg" onerror="this.onerror=null;this.src='/pics/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Young</div><div class="author-info__description">一以贯之。</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/wzyjsha-00"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/wzyjsha-00" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:wzyjsha@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%88%86%E5%B8%83%E7%89%B9%E5%BE%81%E6%B5%8B%E5%BA%A6"><span class="toc-number">1.</span> <span class="toc-text">数据分布特征测度</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9B%86%E4%B8%AD%E8%B6%8B%E5%8A%BF%E7%9A%84%E5%BA%A6%E9%87%8F"><span class="toc-number">2.</span> <span class="toc-text">集中趋势的度量</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E7%B1%BB%E6%95%B0%E6%8D%AE%EF%BC%9A%E4%BC%97%E6%95%B0%EF%BC%88Mode%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">分类数据：众数（Mode）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E6%95%B0%E6%8D%AE%EF%BC%9A%E4%B8%AD%E4%BD%8D%E6%95%B0%EF%BC%88median%EF%BC%89%E5%92%8C%E5%88%86%E4%BD%8D%E6%95%B0"><span class="toc-number">2.2.</span> <span class="toc-text">顺序数据：中位数（median）和分位数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%AD%E4%BD%8D%E6%95%B0%EF%BC%88median%EF%BC%89"><span class="toc-number">2.2.1.</span> <span class="toc-text">中位数（median）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E5%88%86%E4%BD%8D%E6%95%B0%EF%BC%88quartile%EF%BC%89"><span class="toc-number">2.2.2.</span> <span class="toc-text">四分位数（quartile）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%80%BC%E5%9E%8B%E6%95%B0%E6%8D%AE%EF%BC%9A%E5%B9%B3%E5%9D%87%E6%95%B0"><span class="toc-number">2.3.</span> <span class="toc-text">数值型数据：平均数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E5%B9%B3%E5%9D%87%E6%95%B0%E5%92%8C%E5%8A%A0%E6%9D%83%E5%B9%B3%E5%9D%87%E6%95%B0"><span class="toc-number">2.3.1.</span> <span class="toc-text">简单平均数和加权平均数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%A0%E4%BD%95%E5%B9%B3%E5%9D%87%E6%95%B0%EF%BC%88geometric-mean%EF%BC%89"><span class="toc-number">2.3.2.</span> <span class="toc-text">几何平均数（geometric mean）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%97%E6%95%B0%E3%80%81%E4%B8%AD%E4%BD%8D%E6%95%B0%E5%92%8C%E5%B9%B3%E5%9D%87%E6%95%B0%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-number">2.4.</span> <span class="toc-text">众数、中位数和平均数的比较</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A6%BB%E6%95%A3%E7%A8%8B%E5%BA%A6%E7%9A%84%E5%BA%A6%E9%87%8F"><span class="toc-number">3.</span> <span class="toc-text">离散程度的度量</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E7%B1%BB%E6%95%B0%E6%8D%AE%EF%BC%9A%E5%BC%82%E4%BC%97%E6%AF%94%E7%8E%87%EF%BC%88variation-ratio%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">分类数据：异众比率（variation ratio）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E6%95%B0%E6%8D%AE%EF%BC%9A%E5%9B%9B%E5%88%86%E4%BD%8D%E5%B7%AE%EF%BC%88quartile-deviation%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">顺序数据：四分位差（quartile deviation）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%80%BC%E5%9E%8B%E6%95%B0%E6%8D%AE%EF%BC%9A%E6%96%B9%E5%B7%AE%E5%92%8C%E6%A0%87%E5%87%86%E5%B7%AE"><span class="toc-number">3.3.</span> <span class="toc-text">数值型数据：方差和标准差</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%81%E5%B7%AE%EF%BC%88range%EF%BC%89"><span class="toc-number">3.3.1.</span> <span class="toc-text">极差（range）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B3%E5%9D%87%E5%B7%AE%EF%BC%88mean-deviation%EF%BC%89"><span class="toc-number">3.3.2.</span> <span class="toc-text">平均差（mean deviation）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%B7%AE%EF%BC%88variance%EF%BC%89%E5%92%8C%E6%A0%87%E5%87%86%E5%B7%AE%EF%BC%88standard-deviation%EF%BC%89"><span class="toc-number">3.3.3.</span> <span class="toc-text">方差（variance）和标准差（standard deviation）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%AF%B9%E4%BD%8D%E7%BD%AE%E7%9A%84%E5%BA%A6%E9%87%8F"><span class="toc-number">3.3.4.</span> <span class="toc-text">相对位置的度量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E5%88%86%E6%95%B0%EF%BC%88standard-score%EF%BC%89"><span class="toc-number">3.3.4.1.</span> <span class="toc-text">标准分数（standard score）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%87%E6%AF%94%E9%9B%AA%E5%A4%AB%E4%B8%8D%E7%AD%89%E5%BC%8F"><span class="toc-number">3.3.4.2.</span> <span class="toc-text">切比雪夫不等式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%AF%B9%E7%A6%BB%E6%95%A3%E7%A8%8B%E5%BA%A6%EF%BC%9A%E7%A6%BB%E6%95%A3%E7%B3%BB%E6%95%B0"><span class="toc-number">3.4.</span> <span class="toc-text">相对离散程度：离散系数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%81%8F%E6%80%81%E4%B8%8E%E5%B3%B0%E6%80%81%E5%BA%A6%E9%87%8F"><span class="toc-number">4.</span> <span class="toc-text">偏态与峰态度量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%99%84%E8%A1%A81-%E6%8F%8F%E8%BF%B0%E7%BB%9F%E8%AE%A1%E9%87%8F%E5%BA%94%E7%94%A8%E8%8C%83%E5%9B%B4%E4%B8%80%E8%A7%88%E8%A1%A8"><span class="toc-number">5.</span> <span class="toc-text">附表1 描述统计量应用范围一览表</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%99%84%E8%A1%A82-%E6%8F%8F%E8%BF%B0%E7%BB%9F%E8%AE%A1%E9%87%8F%E5%AF%B9%E5%BA%94%E5%87%BD%E6%95%B0%E8%A1%A8"><span class="toc-number">6.</span> <span class="toc-text">附表2 描述统计量对应函数表</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 By Young</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

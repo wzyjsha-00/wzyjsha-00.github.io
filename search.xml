@@ -4,13 +4,25 @@
   
     
     <entry>
-      <title></title>
-      <link href="/2022/10/11/citespace-an-zhuang-ji-shi-yong-jiao-cheng/"/>
-      <url>/2022/10/11/citespace-an-zhuang-ji-shi-yong-jiao-cheng/</url>
+      <title>CiteSpace使用教程01-软件安装与介绍</title>
+      <link href="/2022/10/09/citespace-shi-yong-jiao-cheng/citespace-shi-yong-jiao-cheng-01-ruan-jian-an-zhuang-yu-jie-shao/"/>
+      <url>/2022/10/09/citespace-shi-yong-jiao-cheng/citespace-shi-yong-jiao-cheng-01-ruan-jian-an-zhuang-yu-jie-shao/</url>
       
-        <content type="html"><![CDATA[<blockquote><p>测试分支</p></blockquote><!-- <center>    <img style="border-radius: 0.5em; height: 300px; alien: center" src="\pics\财税与政府行为.jpg">    <div style="border-bottom: 1px solid #d9d9d9; display: inline-block; color: #999; ">这里输入题注</div></center> -->]]></content>
+        <content type="html"><![CDATA[<h1 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h1><ul><li>在CiteSpace <a href="https://citespace.podia.com/">官网</a>注册登陆后 下载 <em>.msi</em> 安装程序(Windows) 或 <em>.dmg</em> 安装程序(Mac)，其中包含了运行CiteSpace所需要的文件，包括它自己的 Java，无需再另行下载Java。</li><li>完成安装后桌面会显示 <strong>CiteSpace</strong> 快捷方式图标，双击运行后桌面会出现 <strong>&lt;CiteSpace Terminal终端&gt;</strong> 窗口(<em>Fig.01</em>)，稍等1-2秒后桌面出现 <strong>&lt;CiteSpace：Welcome！&gt;</strong> 窗口(Fig.01)，表明成功安装，点击 <strong>&lt;CiteSpace：Welcome！&gt;</strong> 窗口最下方的 <strong>Agree</strong> 按钮即可进入软件界面。</li><li>注：在使用CiteSpace期间请不要关闭&lt;CiteSpace Terminal终端&gt; 窗口。</li></ul><center>    <img style="border-radius: 0.5em; height: 400px; alien: center" src="\pics\CiteSpace\Fig_01-01_CiteSpace终端及CiteSpaceWelcome窗口.png">    <div style="border-bottom: 1px solid #d9d9d9; display: inline-block; color: #999; ">Fig.01-01 CiteSpace终端及CiteSpace Welcome! 窗口</div></center><h1 id="界面介绍"><a href="#界面介绍" class="headerlink" title="界面介绍"></a>界面介绍</h1><center>    <img style="border-radius: 0.5em; height: 400px; alien: center" src="\pics\CiteSpace\Fig_01-02_CiteSpace主窗口界面介绍.png">    <div style="border-bottom: 1px solid #d9d9d9; display: inline-block; color: #999; ">Fig.01-02 CiteSpace主窗口界面介绍</div></center>]]></content>
       
       
+      <categories>
+          
+          <category> 软件教程 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CiteSpace </tag>
+            
+        </tags>
       
     </entry>
     
@@ -55,7 +67,7 @@
       
       <categories>
           
-          <category> 计算机科学 </category>
+          <category> 软件教程 </category>
           
       </categories>
       
